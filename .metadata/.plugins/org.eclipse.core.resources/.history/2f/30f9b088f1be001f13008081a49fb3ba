@@ -1,0 +1,44 @@
+<%@ page import="java.io.File" %>
+<%@ page import="org.apache.commons.fileupload.FileItem" %>
+<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
+<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
+<%
+    // Define max sizes
+    int maxMemorySize = 5000 * 1024;
+    int maxFileSize = 5000 * 1024;
+    String uploadDirectory = "D:\\eclipse\\imageupload\\src\\main\\webapp\\uploads\\";
+
+    // Create the uploads directory if it doesn't exist
+    File uploadDir = new File(uploadDirectory);
+    if (!uploadDir.exists()) {
+        uploadDir.mkdirs(); // Create the directory (including parent directories)
+    }
+
+    String contentType = request.getContentType();
+    if (contentType != null && contentType.indexOf("multipart/form-data") >= 0) {
+        DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+        diskFileItemFactory.setSizeThreshold(maxMemorySize);
+        diskFileItemFactory.setRepository(new File(uploadDirectory));
+        ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
+        upload.setSizeMax(maxFileSize);
+
+        try {
+            // Parse the request
+            List fileItems = upload.parseRequest(request);
+            Iterator iterator = fileItems.iterator();
+            while (iterator.hasNext()) {
+                FileItem fileItem = (FileItem) iterator.next();
+                if (!fileItem.isFormField()) {
+                    String fileName = fileItem.getName();
+                    File file = new File(uploadDirectory + fileName);
+                    fileItem.write(file); // Save file to the disk
+                    out.println("File uploaded successfully: " + fileName);
+                }
+            }
+        } catch (Exception e) {
+            out.println("Error during file upload: " + e.getMessage());
+        }
+    } else {
+        out.println("Form is not submitted with multipart/form-data");
+    }
+%>

@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<button><a href="insertForm.jsp" style="text-decoration:none">Insert</a></button>
+<button><a href="viewData.jsp" style="text-decoration:none">View
+Data/Delete/Update</a></button>
+</body>
+</html>
