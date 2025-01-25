@@ -26,8 +26,7 @@ String userName = "root";
 String password="root";
 try{
 Class.forName(driver);
-connection = DriverManager.getConnection(url, userName,
-password);
+connection = DriverManager.getConnection(url, userName,password);
 connection.setAutoCommit(true);
 preparedStatement = connection.prepareStatement("INSERT INTO student(firstName,lastName,age) VALUES(?,?,?)");
 preparedStatement.setString(1, request.getParameter("fname"));

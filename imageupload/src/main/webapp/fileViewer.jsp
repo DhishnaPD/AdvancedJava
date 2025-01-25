@@ -28,14 +28,10 @@
             // Loop through the result set and display images
             while (resultSet.next()) {
                 String filePath = resultSet.getString("image");
-                //String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-                
-
-
                 // Assuming the 'image' column contains the relative file path
-                // Make sure the path is correct and accessible by the web application
-                out.println("<img src=uploads/" + filePath + " alt='Image' style='max-width: 300px;'><br/>");
                 
+                // Ensure the correct path to the image file
+                out.println("<img src='uploads/" + filePath + "' alt='Image' style='max-width: 300px;'><br/>");
             }
         } catch (SQLException | ClassNotFoundException e) {
             // Log the error message for better debugging
